@@ -241,6 +241,8 @@ public class Loginui extends javax.swing.JFrame {
     private void Login_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_btnActionPerformed
         // TODO add your handling code here:
         Controller_of_login l = new Controller_of_login(this);
+        
+        
     }//GEN-LAST:event_Login_btnActionPerformed
 
     private void user_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_user_txtActionPerformed
@@ -255,6 +257,7 @@ public class Loginui extends javax.swing.JFrame {
         // TODO add your handling code here:
         registrationui obj = new registrationui();
         obj.setVisible(true);
+        dispose();
         
     }//GEN-LAST:event_reg_btnActionPerformed
 
