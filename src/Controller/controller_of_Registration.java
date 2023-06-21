@@ -12,8 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import Modal.Registration_modal;
-import View.registrationui;
+import Modal.*;
+import View.*;
 
 
 public class controller_of_Registration
@@ -57,14 +57,34 @@ public class controller_of_Registration
         public boolean checkUser(Registration_modal user) throws Exception
         {
            
-            try
+        try
           {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","Dellinspiron@1176");
+           Class.forName("com.mysql.cj.jdbc.Driver");
+           Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","Dellinspiron@1176");
+            
+           String checkUsernameQuery = "SELECT * FROM register WHERE Username = ?";
+           pst = conn.prepareStatement(checkUsernameQuery);
+           pst.setString(1, user.getUsername());
+           ResultSet rs = pst.executeQuery();
+        if (rs.next()) {
+            
+            JOptionPane.showMessageDialog(null, "Username is already taken");
+            return false;
+        }
+        
+            if (user.getFull_Name().isEmpty() || user.getContactno().isEmpty() ||
+            user.getUsername().isEmpty() || user.getAddress().isEmpty() ||
+            user.getPassword().isEmpty() || user.getRetype_password().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill in all fields");
+            return false;
+        }
+            
+            if (!user.getPassword().equals(user.getRetype_password())) {
+            JOptionPane.showMessageDialog(null, "Password and confirm password must match");
+            return false;
+        }
             String sql="insert into register(Full_Name,Address,Phone_No,Username,Pass,Retype_Pass) values(?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
-
-        // String sql="select * from patient where pname='"+user.getUsername()+"' AND paddress='"+user.getPassword()+"'";
             pst.setString(1,user.getFull_Name());
             pst.setString(2,user.getAddress());
             pst.setString(3,user.getContactno());
@@ -82,7 +102,13 @@ public class controller_of_Registration
           catch(Exception e2)
           {
               System.out.println(e2.getMessage());
-          }         
+              throw e2;
+          }  
+        finally {
+        if (pst != null) {
+            pst.close();
+        }
+    }
             
             return false;
         }

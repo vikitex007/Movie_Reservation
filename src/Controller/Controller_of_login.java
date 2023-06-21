@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import View.Loginui;
 import Modal.Login_Modal;
+import View.Dashboard;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
@@ -38,6 +39,10 @@ public class Controller_of_login {
                 logmod=logview.getUser();   
                 if(checkUser(logmod)){       
                     logview.setMessage("login successfully");
+                    Dashboard obj = new Dashboard();
+                    obj.setVisible(true);
+                    logview.dispose();
+                    
                 }
                 else{
                     logview.setMessage("invalid user");

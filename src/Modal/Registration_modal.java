@@ -9,7 +9,7 @@ package Modal;
  * @author razer
  */
 public class Registration_modal {
-    String Full_Name,Address,Contactno,Username,password,retype_password;
+    String Full_Name,Contactno,Address,Username,password,retype_password;
 
     public String getFull_Name() {
         return Full_Name;
@@ -19,13 +19,7 @@ public class Registration_modal {
         this.Full_Name = Full_Name;
     }
 
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String Address) {
-        this.Address = Address;
-    }
+    
 
     public String getContactno() {
         return Contactno;
@@ -33,6 +27,14 @@ public class Registration_modal {
 
     public void setContactno(String Contactno) {
         this.Contactno = Contactno;
+    }
+    
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String Address) {
+        this.Address = Address;
     }
 
     public String getUsername() {
