@@ -1,12 +1,13 @@
+package Controller;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Controller;
 
 /**
  *
- * @author razer
+ * @author DELL
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,13 +17,13 @@ import Modal.*;
 import View.*;
 
 
-public class controller_of_Registration
+public class Controller_of_dashboard
 {
-    Registration_modal model;
-    registrationui view;
+    Dashboard_Model model;
+    Dashboard view;
     ResultSet rs;
     PreparedStatement pst=null;
-        public controller_of_Registration(registrationui view)
+        public Controller_of_dashboard(Dashboard view)
         {
             this.view=view;
             
@@ -114,3 +115,4 @@ public class controller_of_Registration
         }
     }  
 }
+
