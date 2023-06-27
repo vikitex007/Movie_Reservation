@@ -17,6 +17,8 @@ import Modal.*;
 import View.*;
 
 
+
+
 public class Controller_of_dashboard
 {
     Dashboard_Model model;
@@ -24,27 +26,29 @@ public class Controller_of_dashboard
     ResultSet rs;
     PreparedStatement pst=null;
         public Controller_of_dashboard(Dashboard view)
+                
+            
         {
             this.view=view;
             
-             view.addLoginListner(new RegisetrListener());
+             view.addDashboardListner(new DashboardListener());
         }
         
-        class RegisetrListener implements ActionListener
+        class DashboardListener implements ActionListener
         {
 
         @Override
             public void actionPerformed(ActionEvent e) {
                 try
                 {
-                    model=view.getUser();
+                    model=view.getuser();
                         if(checkUser(model))
                         {
-                            view.setMessage("Registered Successfully");
+                            view.setMessage("Added Successfully");
                         }
                          else
                         {
-                            view.setMessage("Invalid registration");
+                            view.setMessage("Invalid reruest");
                     
                         }
                 }
@@ -55,43 +59,32 @@ public class Controller_of_dashboard
 
         }
         
-        public boolean checkUser(Registration_modal user) throws Exception
+        public boolean checkUser(Dashboard_Model user) throws Exception
         {
            
         try
           {
            Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","12345678");
+           Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","123456789");
             
-           String checkUsernameQuery = "SELECT * FROM register WHERE Username = ?";
-           pst = conn.prepareStatement(checkUsernameQuery);
-           pst.setString(1, user.getUsername());
-           ResultSet rs = pst.executeQuery();
-        if (rs.next()) {
-            
-            JOptionPane.showMessageDialog(null, "Username is already taken");
-            return false;
-        }
+
         
-            if (user.getFull_Name().isEmpty() || user.getContactno().isEmpty() ||
-            user.getUsername().isEmpty() || user.getAddress().isEmpty() ||
-            user.getPassword().isEmpty() || user.getRetype_password().isEmpty()) {
+            if (user.getMovie_name().isEmpty() || user.getGenre().isEmpty() ||
+            user.getDuration().isEmpty() || user.getAge().isEmpty() ||
+            user.getDesc().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Please fill in all fields");
             return false;
         }
             
-            if (!user.getPassword().equals(user.getRetype_password())) {
-            JOptionPane.showMessageDialog(null, "Password and confirm password must match");
-            return false;
-        }
-            String sql="insert into register(Full_Name,Address,Phone_No,Username,Pass,Retype_Pass) values(?,?,?,?,?,?)";
+                       String sql="insert into dashboard(Movie_name,Movie_genre,duration,age_catagory,Plot) values(?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
-            pst.setString(1,user.getFull_Name());
-            pst.setString(2,user.getAddress());
-            pst.setString(3,user.getContactno());
-            pst.setString(4,user.getUsername());
-            pst.setString(5,user.getPassword());
-            pst.setString(6,user.getRetype_password());
+            pst.setString(1,user.getMovie_name());
+            pst.setString(2,user.getGenre());
+            pst.setString(3,user.getDuration());
+            pst.setString(4,user.getAge());
+            pst.setString(5,user.getDesc());
+            
+            
 
 
 
