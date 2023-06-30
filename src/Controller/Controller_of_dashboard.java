@@ -15,6 +15,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import Modal.*;
 import View.*;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -107,5 +108,33 @@ public class Controller_of_dashboard
             return false;
         }
     }  
-}
+        
+        
+        
+        
+//        private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+//            // TODO add your handling Code here:
+//            //get jtable model first
+//            DefaultTableModel tbModel = jTablel.getMode1();
+//            
+//            
+//            //delete row
+//            if(jTablel.getSelectedRowCount ()==1){
+//                //single row is selected than delete
+//                tblModel.removeRow(jTabel.getSelectedRow());
+//                
+//            }else{
+//                if(jTable1.getRowCount()==0){
+//                    //table1 is empty (no data) than display message
+//                    JoptionPane.showMessageDialog(this,"Table is Empty.");
+//                }else{
+//                    //if table is not empty but row isnot selectedor multiple row is selected
+//                    JoptionPane.showMessageDialog(this,"Table is Empty")
+//                }
+//                    
+//                }
+//            }
+//                
+//        }
+//       
 

@@ -172,7 +172,7 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         DeleteTable = new javax.swing.JTable();
         jPanel14 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         Updatemovies = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -1345,9 +1345,14 @@ public class Dashboard extends javax.swing.JFrame {
             .addGap(0, 879, Short.MAX_VALUE)
         );
 
-        jButton3.setBackground(new java.awt.Color(153, 153, 153));
-        jButton3.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
-        jButton3.setText("Remove");
+        btnDelete.setBackground(new java.awt.Color(153, 153, 153));
+        btnDelete.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
+        btnDelete.setText("Remove");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Refresh");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1368,7 +1373,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGap(181, 181, 181)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1380,7 +1385,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addGroup(RemovemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1631,6 +1636,26 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        //get jtable model first
+        DefaultTableModel tblModel = (DefaultTableModel) jTable1.getModel();
+        
+        //delete row
+        if(jTable1.getSelectedRowCount () ==1) {
+            //if single row is selected than delete
+            tblModel.removeRow(jTable1.getSelectedRow());
+        }else{
+            if(jTable1.getRowCount()==0){
+                //if table is empty (no data) than dispaly message
+                JOptionPane.showMessageDialog(this, "Table is empty");
+            }else{
+                //if table is not empty but row is not selected or multiple row is Selected
+                JOptionPane.showMessageDialog(this, "Please Select Single Row to Delete");
+            }
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
    
     public static void main(String args[]) {
         
@@ -1651,10 +1676,10 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Ticketing;
     private javax.swing.JPanel Updatemovies;
     private javax.swing.JTextField age_txt;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JTextField desc_txt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
