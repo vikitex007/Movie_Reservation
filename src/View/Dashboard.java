@@ -7,7 +7,14 @@ import javax.swing.JOptionPane;
 import Modal.*;
 import Controller.*;
 import java.awt.event.ActionListener;
-
+import Controller.*;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -170,7 +177,6 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jPanel15 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         Addmovies1 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -182,6 +188,10 @@ public class Dashboard extends javax.swing.JFrame {
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jTextField10 = new javax.swing.JTextField();
+        removeupdate = new javax.swing.JButton();
+        Update = new javax.swing.JButton();
+        search_txt = new javax.swing.JTextField();
+        search_btn = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
@@ -195,7 +205,6 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1920, 1080));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1393,12 +1402,8 @@ public class Dashboard extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 879, Short.MAX_VALUE)
+            .addGap(0, 899, Short.MAX_VALUE)
         );
-
-        jToggleButton1.setBackground(new java.awt.Color(153, 153, 153));
-        jToggleButton1.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
-        jToggleButton1.setText("Update");
 
         Addmovies1.setBackground(new java.awt.Color(255, 204, 0));
 
@@ -1416,6 +1421,12 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel26.setFont(new java.awt.Font("Take Cover", 0, 24)); // NOI18N
         jLabel26.setText("Movie Discription:");
+
+        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField6ActionPerformed(evt);
+            }
+        });
 
         jTextField10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1470,15 +1481,46 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(122, Short.MAX_VALUE))
         );
 
+        removeupdate.setText("Refresh");
+        removeupdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeupdateActionPerformed(evt);
+            }
+        });
+
+        Update.setText("Update");
+        Update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateActionPerformed(evt);
+            }
+        });
+
+        search_btn.setText("search");
+        search_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_btnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout UpdatemoviesLayout = new javax.swing.GroupLayout(Updatemovies);
         Updatemovies.setLayout(UpdatemoviesLayout);
         UpdatemoviesLayout.setHorizontalGroup(
             UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UpdatemoviesLayout.createSequentialGroup()
-                .addContainerGap(600, Short.MAX_VALUE)
-                .addGroup(UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(UpdatemoviesLayout.createSequentialGroup()
+                        .addContainerGap(1030, Short.MAX_VALUE)
+                        .addComponent(removeupdate, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))
+                    .addGroup(UpdatemoviesLayout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addGroup(UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(search_txt)
+                            .addComponent(search_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 738, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(105, 105, 105)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1490,10 +1532,20 @@ public class Dashboard extends javax.swing.JFrame {
         UpdatemoviesLayout.setVerticalGroup(
             UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(UpdatemoviesLayout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UpdatemoviesLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UpdatemoviesLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(search_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(search_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)))
+                .addGroup(UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(removeupdate, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
+                    .addComponent(Update, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(56, 56, 56))
             .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(UpdatemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1577,8 +1629,73 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_movie_genre_txtActionPerformed
 
     private void Add_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Add_btnActionPerformed
-        Controller_of_dashboard r=new Controller_of_dashboard(this);
+//        Controller_of_dashboard r=new Controller_of_dashboard(this);
     }//GEN-LAST:event_Add_btnActionPerformed
+
+    private void removeupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeupdateActionPerformed
+        // TODO add your handling code here:
+try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","12345678");
+             
+            Statement st= conn.createStatement();
+            String sql = "select * from Dashboard";
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                String Movie_name = rs.getString(1);
+                String Movie_genre = rs.getString(2);
+                String Age_category = rs.getString(3);
+                String Duration = rs.getString(4);
+                String Plot = rs.getString(5);
+                
+                
+                
+                String tbData[] = {Movie_name,Movie_genre,Age_category,Duration,Plot};
+                DefaultTableModel tblmodel = (DefaultTableModel)jTable2.getModel();
+                
+                tblmodel.addRow(tbData);
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Cannot be Refreshed");
+        }
+    }//GEN-LAST:event_removeupdateActionPerformed
+
+    private void UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateActionPerformed
+        // TODO add your handling code here:
+        Controller_of_dashboard a=new Controller_of_dashboard(this);
+    }//GEN-LAST:event_UpdateActionPerformed
+
+    private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_btnActionPerformed
+        // TODO add your handling code here:
+        String mname=search_txt.getText();
+        try {
+             Class.forName("com.mysql.cj.jdbc.Driver");
+             Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","12345678");
+             Statement st= conn.createStatement();
+             ResultSet rs= st.executeQuery("select Movie_name,Movie_genre,duration,Age_category,Plot from dashboard where Movie_name='"+mname+"'");
+             if(rs.next()) {
+                 jTextField6.setText(rs.getString(1));
+                 jTextField7.setText(rs.getString(2));
+                 jTextField8.setText(rs.getString(3));
+                 jTextField9.setText(rs.getString(4));
+                 jTextField10.setText(rs.getString(5));
+             }
+             else
+                 JOptionPane.showMessageDialog(null,"Please provide correct credentials");
+             conn.close();
+             rs.close();
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+ 
+    }//GEN-LAST:event_search_btnActionPerformed
+
+    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField6ActionPerformed
 
    
     public static void main(String args[]) {
@@ -1597,6 +1714,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel Home;
     private javax.swing.JPanel Removemovies;
     private javax.swing.JPanel Ticketing;
+    private javax.swing.JButton Update;
     private javax.swing.JPanel Updatemovies;
     private javax.swing.JTextField age_txt;
     private javax.swing.JTextField desc_txt;
@@ -1724,9 +1842,11 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField movie_genre_txt;
     private javax.swing.JTextField movie_name_txt;
+    private javax.swing.JButton removeupdate;
+    private javax.swing.JButton search_btn;
+    private javax.swing.JTextField search_txt;
     private javax.swing.JTextField time_txt;
     // End of variables declaration//GEN-END:variables
 
