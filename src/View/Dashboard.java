@@ -7,6 +7,13 @@ import javax.swing.JOptionPane;
 import Modal.*;
 import Controller.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -163,9 +170,10 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         Removemovies = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        DeleteTable = new javax.swing.JTable();
         jPanel14 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         Updatemovies = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -195,7 +203,6 @@ public class Dashboard extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1920, 1080));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -1311,8 +1318,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         Removemovies.setBackground(new java.awt.Color(255, 204, 0));
 
-        jTable1.setFont(new java.awt.Font("Stencil", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        DeleteTable.setFont(new java.awt.Font("Stencil", 0, 18)); // NOI18N
+        DeleteTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -1323,7 +1330,7 @@ public class Dashboard extends javax.swing.JFrame {
                 "Movie name", "Genre", "Duration", "Discription", "Age Restriction"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(DeleteTable);
 
         jPanel14.setBackground(new java.awt.Color(0, 51, 102));
 
@@ -1342,15 +1349,26 @@ public class Dashboard extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
         jButton3.setText("Remove");
 
+        jButton1.setText("Refresh");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout RemovemoviesLayout = new javax.swing.GroupLayout(Removemovies);
         Removemovies.setLayout(RemovemoviesLayout);
         RemovemoviesLayout.setHorizontalGroup(
             RemovemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RemovemoviesLayout.createSequentialGroup()
                 .addGap(352, 352, 352)
-                .addGroup(RemovemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(RemovemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RemovemoviesLayout.createSequentialGroup()
+                        .addGap(181, 181, 181)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1361,7 +1379,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(112, 112, 112)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(RemovemoviesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1580,6 +1600,37 @@ public class Dashboard extends javax.swing.JFrame {
         Controller_of_dashboard r=new Controller_of_dashboard(this);
     }//GEN-LAST:event_Add_btnActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","upeshratala@4414");
+             
+            Statement st= conn.createStatement();
+            String sql = "select * from Dashboard";
+            ResultSet rs = st.executeQuery(sql);
+            
+            while(rs.next()){
+                String Movie_name = rs.getString(1);
+                String Movie_genre = rs.getString(2);
+                String Age_category = rs.getString(3);
+                String Duration = rs.getString(4);
+                String Plot = rs.getString(5);
+                
+                
+                
+                String tbData[] = {Movie_name,Movie_genre,Age_category,Duration,Plot};
+                DefaultTableModel tblmodel = (DefaultTableModel)DeleteTable.getModel();
+                
+                tblmodel.addRow(tbData);
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Cannot be Refreshed");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
    
     public static void main(String args[]) {
         
@@ -1594,12 +1645,14 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton Add_btn;
     private javax.swing.JPanel Addmovies;
     private javax.swing.JPanel Addmovies1;
+    private javax.swing.JTable DeleteTable;
     private javax.swing.JPanel Home;
     private javax.swing.JPanel Removemovies;
     private javax.swing.JPanel Ticketing;
     private javax.swing.JPanel Updatemovies;
     private javax.swing.JTextField age_txt;
     private javax.swing.JTextField desc_txt;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
@@ -1717,7 +1770,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField6;

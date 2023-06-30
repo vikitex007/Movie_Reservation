@@ -65,7 +65,7 @@ public class Controller_of_dashboard
         try
           {
            Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","123456789");
+           Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","upeshratala@4414");
             
 
         

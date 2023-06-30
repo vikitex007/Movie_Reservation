@@ -60,7 +60,7 @@ public class controller_of_Registration
         try
           {
            Class.forName("com.mysql.cj.jdbc.Driver");
-           Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","12345678");
+           Connection conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/user","root","upeshratala@4414");
             
            String checkUsernameQuery = "SELECT * FROM register WHERE Username = ?";
            pst = conn.prepareStatement(checkUsernameQuery);
