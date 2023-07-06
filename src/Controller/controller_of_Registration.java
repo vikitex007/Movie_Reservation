@@ -83,7 +83,7 @@ public class controller_of_Registration
             JOptionPane.showMessageDialog(null, "Password and confirm password must match");
             return false;
         }
-            String sql="insert into register(Full_Name,Address,Phone_No,Username,Pass,Retype_Pass) values(?,?,?,?,?,?)";
+            String sql = "insert into register(Full_Name,Address,Phone_No,Username,Pass,Retype_Pass) values(?,?,?,?,?,?)";
             pst = conn.prepareStatement(sql);
             pst.setString(1,user.getFull_Name());
             pst.setString(2,user.getAddress());
@@ -95,7 +95,7 @@ public class controller_of_Registration
 
 
             pst.executeUpdate();
-              System.out.println("Data inserted");
+            System.out.println("Data inserted");
             JOptionPane.showMessageDialog(null,"Data Registered Successfully");
           
           }

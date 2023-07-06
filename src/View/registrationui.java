@@ -24,7 +24,7 @@ public class registrationui extends javax.swing.JFrame {
     }
 public Registration_modal getUser()
 {
-   // model=new RegisterModel(txtusername.getText(),txtpassword.getText());
+   
     model = new Registration_modal(Name_txt.getText(),Contact_txt.getText(),Address_txt.getText(),User_txt.getText(),pass_txt.getText(),retype_txt.getText());
     return model;
 }
